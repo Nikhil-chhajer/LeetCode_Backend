@@ -1,6 +1,6 @@
 import mongoose,{Document} from "mongoose";
 
-interface ITestcase extends Document{
+interface ITestcase{
     input:string,
     output:string
 
