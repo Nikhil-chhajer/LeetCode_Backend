@@ -7,6 +7,7 @@ import { attachCorrelationIdMiddleware } from "./middlewares/correlation.middlew
 // import { z } from "zod/v4";
 import { genericErrorHandler } from "./middlewares/error.middleware";
 import { startWorkers } from "./workers/evaluation.worker";
+import { pullImages } from "./utils/containers/pullimage.util";
 const app=express();
 const PORT=serverconfig.PORT;
 app.use(express.json())
@@ -29,6 +30,9 @@ logger.info("worker started")
 //     name:"nikhil",
 //     age:1
 // }
+await pullImages()
+console.log("Imaged pulled successfully")
+
 app.use(genericErrorHandler)
 // const objschema=z.object({
 //     name:z.string(),

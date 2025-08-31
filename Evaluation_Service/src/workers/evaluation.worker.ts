@@ -7,7 +7,8 @@ import { createNewRedisConnection } from "../config/redis.config";
 
 
 async function setupEvaluationWorker(){
-    const worker=new Worker("submisison",async(job)=>{
+    const worker=new Worker("submission",async(job)=>{
+        logger.info("into the worker")
         logger.info("processing the job",job.id);
 
     },{
@@ -32,5 +33,6 @@ async function setupEvaluationWorker(){
 }
 
 export async function startWorkers(){
-    await setupEvaluationWorker();
+     setupEvaluationWorker();
+    logger.info("coming back to worker")
 }
