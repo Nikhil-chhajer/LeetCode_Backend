@@ -3,7 +3,7 @@ import { createNewRedisConnection } from "../config/redis.config"
 import logger from "../config/logger.config";
 
 
-export const submissionQueue=new Queue("",{
+export const submissionQueue=new Queue("submission",{
     connection:createNewRedisConnection(),
     defaultJobOptions:{
         attempts:3,

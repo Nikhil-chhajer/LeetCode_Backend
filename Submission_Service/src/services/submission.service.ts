@@ -1,9 +1,9 @@
-// import { getProblemById } from "../apis/problem.api";
+
 import { getProblemById } from "../apis/problem.api";
 import logger from "../config/logger.config";
 import { ISubmission, ISubmissionData, SubmissionStatus } from "../models/submission.model";
 import { addsubmissionjob } from "../producers/submission.producer";
-// import { addSubmissionJob } from "../producers/submission.producer";
+
 import { ISubmissionRepository } from "../repositories/submission.repo";
 import { InternalServerError } from "../utils/app.error";
 
