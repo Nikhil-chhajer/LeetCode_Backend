@@ -9,7 +9,9 @@ import { genericErrorHandler } from "./middlewares/error.middleware";
 import { startWorkers } from "./workers/evaluation.worker";
 import { pullImages } from "./utils/containers/pullimage.util";
 
-import { runPythonCode } from "./utils/containers/pythonRunner";
+import { runCode, RunCodeOptions} from "./utils/containers/codeRunner.utils";
+import { CPP_IMAGE } from "./utils/helpers/constants";
+
 const app=express();
 const PORT=serverconfig.PORT;
 app.use(express.json())
@@ -33,13 +35,36 @@ logger.info("worker started")
 //     age:1
 // }
 await pullImages()
-console.log("Imaged pulled successfully")
-const code=`
-for i in range(10):
-    print(i)
+console.log("Imaged pulled successfully");
 
-`
-await runPythonCode(code);
+// const response={
+//     code:`
+// i=0
+// while True:
+//     print(i)
+
+// `,
+// language:"python" as const,
+// timeout:3000
+// }
+const response:RunCodeOptions={
+    code:`
+    #include<iostream>
+    using namespace std;
+    int main(){
+    cout<<"helo World"<<endl;
+    for(int i=0;i<10;i++){
+    cout<<i<<endl;
+    }
+    return 0;
+    }
+    `,
+language:"cpp",
+timeout:3000,
+image:CPP_IMAGE
+}
+
+await runCode(response);
 
 app.use(genericErrorHandler)
 // const objschema=z.object({
