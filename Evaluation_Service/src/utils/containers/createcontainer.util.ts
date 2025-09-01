@@ -26,7 +26,7 @@ export async function createNewDockerContainer(options:CreateContainerOptions){
                 Memory:options.memoryLimit,
                 PidsLimit:100, // to limit no of process
                 CpuQuota:5000,//cpu usage=cpuquota/cpuperiod so it will .5 i.e 50% usage  of each cpu core 
-                CpuPeriod:100000,
+                CpuPeriod:10000,
                 SecurityOpt:['no-new-privileges'],//to prevent privilege escalation
                 NetworkMode:'none'//to prevent network access
             } 

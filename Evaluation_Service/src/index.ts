@@ -8,8 +8,8 @@ import { attachCorrelationIdMiddleware } from "./middlewares/correlation.middlew
 import { genericErrorHandler } from "./middlewares/error.middleware";
 import { startWorkers } from "./workers/evaluation.worker";
 import { pullImages } from "./utils/containers/pullimage.util";
-import { createNewDockerContainer } from "./utils/containers/createcontainer.util";
-import { PYTHON_IMAGE } from "./utils/helpers/constants";
+
+import { runPythonCode } from "./utils/containers/pythonRunner";
 const app=express();
 const PORT=serverconfig.PORT;
 app.use(express.json())
@@ -34,16 +34,12 @@ logger.info("worker started")
 // }
 await pullImages()
 console.log("Imaged pulled successfully")
+const code=`
+for i in range(10):
+    print(i)
 
-const container=await createNewDockerContainer({
-    imgName:PYTHON_IMAGE,
-    cmdExecutable:[],
-    memoryLimit:1024*1024*1024//2gb
-
-})
-
-
-await container?.start()
+`
+await runPythonCode(code);
 
 app.use(genericErrorHandler)
 // const objschema=z.object({
