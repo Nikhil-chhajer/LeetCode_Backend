@@ -22,6 +22,7 @@ export async function createNewDockerContainer(options:CreateContainerOptions){
             AttachStdout:true,
             Tty:false,     // if true then it will provide pseudo terminal but we dont need now
             OpenStdin:true,//keep the input stream open even if no input is found
+            StdinOnce: false ,
             HostConfig:{
                 Memory:options.memoryLimit,
                 PidsLimit:100, // to limit no of process

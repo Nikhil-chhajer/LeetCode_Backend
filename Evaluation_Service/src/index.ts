@@ -11,6 +11,7 @@ import { pullImages } from "./utils/containers/pullimage.util";
 
 import { runCode, RunCodeOptions} from "./utils/containers/codeRunner.utils";
 import { CPP_IMAGE } from "./utils/helpers/constants";
+// import { PYTHON_IMAGE } from "./utils/helpers/constants";
 
 const app=express();
 const PORT=serverconfig.PORT;
@@ -45,23 +46,25 @@ console.log("Imaged pulled successfully");
 
 // `,
 // language:"python" as const,
-// timeout:3000
+// timeout:3000,
+//image:PYTHON_IMAGE
 // }
 const response:RunCodeOptions={
     code:`
     #include<iostream>
     using namespace std;
     int main(){
-    cout<<"helo World"<<endl;
-    for(int i=0;i<10;i++){
-    cout<<i<<endl;
-    }
+    cout<<"hello World"<<endl;
+    int x;
+    cin>>x;
+    cout<<x;
     return 0;
     }
     `,
 language:"cpp",
 timeout:3000,
-image:CPP_IMAGE
+image:CPP_IMAGE,
+input:"7"
 }
 
 await runCode(response);
