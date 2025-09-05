@@ -11,7 +11,7 @@ export interface RunCodeOptions {
 }
 export async function runCode(options: RunCodeOptions) {
     const { code, language, timeout, image, input } = options
-
+    // console.log(timeout)
     const container = await createNewDockerContainer({
         imgName: image,
         cmdExecutable: commands[language](code, input),
@@ -20,13 +20,21 @@ export async function runCode(options: RunCodeOptions) {
     })
 
 
-
+    let isTimelimitExceeded=false;
     const timeLimitExceedTimeout = setTimeout(() => {
         console.log("time Limit exceed");
+        isTimelimitExceeded=true
         container?.kill();
 
     }, timeout)
     await container?.start();
+    if(isTimelimitExceeded){
+        await container?.remove();
+        return {
+            status:"Time Limit Exceeded",
+            output:"Time Limit Exceeded"
+        }
+    }
 
 
     const status = await container?.wait();
@@ -46,9 +54,19 @@ export async function runCode(options: RunCodeOptions) {
     clearTimeout(timeLimitExceedTimeout);
     if (status.StatusCode == 0) {
         console.log("container exited successfully")
+        return {
+            status:"success",
+            output:containerlogs
+
+        }
     }
     else {
+        
         console.log("container exited with error")
+        return{
+             status:"Failed",
+             output:"Failed"
+        }
     }
 
 

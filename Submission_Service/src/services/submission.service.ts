@@ -38,7 +38,7 @@ export class SubmissionService implements ISubmissionService {
         }
         // add submission to db
         const submission =await this.submissionRepository.create(submissionData);
-
+       
         // add submission to redis queue
         const jobid=await addsubmissionjob({
             submissionId:submission.id,
@@ -73,7 +73,9 @@ export class SubmissionService implements ISubmissionService {
     }
 
     async updateSubmissionStatus(id: string, status: SubmissionStatus, submissionData: ISubmissionData): Promise<ISubmission | null> {
+        
         const submission = await this.submissionRepository.updateStatus(id, status, submissionData);
+        console.log("i am service the data is ",submissionData)
         if(!submission) {
             throw new InternalServerError("Submission not found");
         }

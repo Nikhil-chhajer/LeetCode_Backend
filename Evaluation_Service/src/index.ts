@@ -9,8 +9,8 @@ import { genericErrorHandler } from "./middlewares/error.middleware";
 import { startWorkers } from "./workers/evaluation.worker";
 import { pullImages } from "./utils/containers/pullimage.util";
 
-import { runCode, RunCodeOptions} from "./utils/containers/codeRunner.utils";
-import { CPP_IMAGE } from "./utils/helpers/constants";
+// import { runCode, RunCodeOptions} from "./utils/containers/codeRunner.utils";
+// import { CPP_IMAGE } from "./utils/helpers/constants";
 // import { PYTHON_IMAGE } from "./utils/helpers/constants";
 
 const app=express();
@@ -49,25 +49,25 @@ console.log("Imaged pulled successfully");
 // timeout:3000,
 //image:PYTHON_IMAGE
 // }
-const response:RunCodeOptions={
-    code:`
-    #include<iostream>
-    using namespace std;
-    int main(){
-    cout<<"hello World"<<endl;
-    int x;
-    cin>>x;
-    cout<<x;
-    return 0;
-    }
-    `,
-language:"cpp",
-timeout:3000,
-image:CPP_IMAGE,
-input:"7"
-}
+// const response:RunCodeOptions={
+//     code:`
+//     #include<iostream>
+//     using namespace std;
+//     int main(){
+//     cout<<"hello World"<<endl;
+//     int x;
+//     cin>>x;
+//     cout<<x;
+//     return 0;
+//     }
+//     `,
+// language:"cpp",
+// timeout:3000,
+// image:CPP_IMAGE,
+// input:"7"
+// }
 
-await runCode(response);
+// await runCode(response);
 
 app.use(genericErrorHandler)
 // const objschema=z.object({

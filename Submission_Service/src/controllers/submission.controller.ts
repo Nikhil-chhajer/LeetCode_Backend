@@ -11,11 +11,12 @@ export class SubmissionController {
 
     createSubmission = async (req: Request, res: Response, next: NextFunction) => {
         logger.info("Creating new submission", { body: req.body });
+    
         
         const submission = await this.submissionService.createSubmission(req.body);
         
         logger.info("Submission created successfully", { submissionId: submission.id });
-        
+      
         res.status(201).json({
             success: true,
             message: "Submission created successfully",
@@ -73,12 +74,13 @@ export class SubmissionController {
     updateSubmissionStatus = async (req: Request, res: Response, next: NextFunction) => {
         const { id } = req.params;
         const { status, submissionData } = req.body;
-        
+ 
         logger.info("Updating submission status", { 
             submissionId: id, 
             status ,
             submissionData
         });
+      
         
         const submission = await this.submissionService.updateSubmissionStatus(id, status, submissionData);
         
